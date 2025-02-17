@@ -11,3 +11,18 @@ class Schedule(models.Model):
     
     class Meta:
         ordering = ['day', 'start_time']  # Sort by date and then by start time
+
+
+
+# Create your models here.
+class Speakers(models.Model):
+    name=models.CharField(max_length=100,null=True)
+    designation=models.CharField(max_length=100,null=True)
+    image=models.ImageField(upload_to='images',null=True,blank=True)
+
+class Result(models.Model):
+    speaker=models.ForeignKey(Speakers,on_delete=models.CASCADE,null=True)
+    name=models.CharField(max_length=100,null=True)
+    designation=models.CharField(max_length=100,null=True)
+    image=models.ImageField(upload_to='images',blank=True,null=True)
+    description=models.CharField(max_length=100,null=True)
