@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 class Schedule(models.Model):
     day = models.DateField()  # The date of the event
@@ -11,3 +12,19 @@ class Schedule(models.Model):
     
     class Meta:
         ordering = ['day', 'start_time']  # Sort by date and then by start time
+
+#-----------------Comment Model------------------------
+class Comment(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment=models.TextField(max_length=500)
+
+    class Meta:
+        db_table = 'cmt'
+
+    def __str__(self):
+        return self.name
+
+class CmtForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        fields='__all__'

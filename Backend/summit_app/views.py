@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Schedule
+from django.shortcuts import render,redirect
+from .models import *
 from django.db.models import DateField
 
 def schedule_view(request):
@@ -12,3 +12,19 @@ def schedule_view(request):
         grouped_schedules[schedule.day].append(schedule)
     
     return render(request, 'schedule.html', {'grouped_schedules': grouped_schedules})
+
+# --------------------Comment views---------------
+def add_comment(request):
+    if request.method == 'POST':
+        f=CmtForm(request.POST)
+        f.save()
+        return redirect('/add_comment')
+    else:
+        f=CmtForm
+        context={'form':f}
+        return render(request,'add_comment.html',context)
+    
+def display_cmt(request):
+    cmt=Comment.objects.all()
+    context={'comment':cmt}
+    return render(request,'display_cmt.html',context)
