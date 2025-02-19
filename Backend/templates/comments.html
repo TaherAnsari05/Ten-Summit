@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
-{% block title %}{% endblock title %}
+
+{% block title %} Comments {% endblock title %}
 
 {% block content %}
 {% if add_cmt %}
 <div class="container">
     <h1>Comment Form</h1>
-    <form action="post" method="POST">
-        {%csrf_token%}
-        {{form.as_table}}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
         <br>
-        <button type='submit' value="save" class="btn btn-outline-primary">Submit</button>
-        <button type='reset' value="reset" class="btn btn-outline-primary">Reset</button>
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+        <button type="reset" class="btn btn-outline-primary">Reset</button>
     </form>
-    <a href="/display_cmt/" class="btn btn-primary">Show Comments</a>
+    <a href="{% url 'display_cmt' %}" class="btn btn-primary">Show Comments</a>
 </div>
+
 {% elif show_cmt %}
 <div class="container">
     <h1>Comment List</h1>
@@ -22,15 +24,16 @@
             <th>ID</th>
             <th>Comment</th>
         </tr>
-        {%for i in comment%}
+        {% for i in comment %}
         <tr>
-            <td>{{i.id}}</td>
-            <td>{{i.comment}}</td>
+            <td>{{ i.id }}</td>
+            <td>{{ i.comment }}</td>
         </tr>
-        {%endfor%}
+        {% endfor %}
     </table>
-    <a href="/add_comment/" class="btn btn-primary">add comment</a>
+    <a href="{% url 'add_comment' %}" class="btn btn-primary">Add Comment</a>
 </div>
+
 {% else %}
     <p>Nothing to Show</p>
 {% endif %}

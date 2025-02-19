@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-
+from django.contrib.auth.models import User
 class Schedule(models.Model):
     day = models.DateField()
     start_time = models.TimeField()
@@ -23,13 +23,14 @@ class Speaker(models.Model):
     speaker_Twitter_account = models.URLField(null=True, blank=True)
 
 class Comment(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     comment=models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 
 class CommentForm(forms.ModelForm):
-    model = Comment
-    fields = ['comment']
-    widgets = {
-        'comment':forms.Textarea(attrs={'rows':4, 'placeholder':'Write your comment here'})
+    class Meta:
+        model = Comment
+        fields = ['comment']
+        widgets = {
+            'comment':forms.Textarea(attrs={'rows':4, 'placeholder':'Write your comment here'})
 }
