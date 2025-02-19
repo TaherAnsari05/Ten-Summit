@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 pillow = "*"
 django-allauth = "*"
+python-dotenv = "*"
+PyJWT = "*"
 
 [dev-packages]
 

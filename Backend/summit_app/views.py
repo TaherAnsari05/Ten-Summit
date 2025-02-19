@@ -9,7 +9,7 @@ def home(request):
 
 def speaker_details(request,pk):
     speaker_details = get_object_or_404(Speaker, pk=pk)
-    return render(request, 'speaker_details.html' , context={'speaker_detail':speaker_details})
+    return render(request, 'speakers.html' , context={'speaker_detail':speaker_details})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
