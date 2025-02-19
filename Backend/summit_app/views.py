@@ -1,6 +1,15 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponse
 from .models import *
 from django.db.models import DateField
+from django.contrib.auth.decorators import login_required
+
+def home(request):
+    speaker = Speaker.objects.all()
+    return render(request, 'index.html', context={'context':speaker})
+
+def speaker_details(request,pk):
+    speaker = get_object_or_404(Speaker, pk=pk)
+    return render(request, 'result.html' , context={'context':speaker})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -13,21 +22,19 @@ def schedule_view(request):
     
     return render(request, 'schedule.html', {'grouped_schedules': grouped_schedules})
 
-# --------------------Comment views---------------
+@login_required
 def add_comment(request):
     if request.method == 'POST':
-        f=CmtForm(request.POST)
+        f=CommentForm(request.POST)
         f.save()
         return redirect('/add_comment')
     else:
-        f=CmtForm
-        context={'form':f}
-        return render(request,'add_comment.html',context)
+        return render(request,'comments.html',context={'add_cmt': 'add_cmt', 'form':CmtForm})
     
 def display_cmt(request):
     cmt=Comment.objects.all()
     context={'comment':cmt}
-    return render(request,'display_cmt.html',context)
+    return render(request,'comments.html',context={'show_cmt': 'show_cmt'})
 
 def speaker(request):
     sk=Speakers.objects.all()
