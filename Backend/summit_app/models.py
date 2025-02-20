@@ -34,3 +34,42 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'comment':forms.Textarea(attrs={'rows':4, 'placeholder':'Write your comment here'})
 }
+        
+        
+#---------------careers section--------------
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+class Job(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='jobs')
+    role = models.CharField(max_length=255)
+    location = models.CharField(max_length=255)
+    seniority = models.CharField(max_length=255, blank=True, null=True)  # Now optional
+    job_type = models.CharField(max_length=255)
+    link = models.URLField(blank=True, null=True)  # Optional job link
+    about_the_position = models.TextField(max_length=1000)
+    responsibilities = models.TextField(max_length=1000)
+    requirements = models.TextField(max_length=1000)
+    nice_to_have = models.TextField(max_length=1000)
+
+
+    def __str__(self):
+        return self.role
+
+class JobApplication(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    email = models.EmailField()
+    phone = models.CharField(max_length=15)
+    resume = models.FileField(upload_to='resumes/')
+    linkedin_url = models.CharField(max_length=50)
+    cover_letter = models.FileField(upload_to='cover_letters/', blank=True, null=True)
+    portfolio = models.FileField(upload_to='portfolios/', blank=True, null=True)
+    personal_note = models.TextField(blank=True, null=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} - {self.email}"

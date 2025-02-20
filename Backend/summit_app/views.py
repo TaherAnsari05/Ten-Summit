@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect, HttpResponse,get_object_or_404
 from .models import *
 from django.db.models import DateField
 from django.contrib.auth.decorators import login_required
+from .forms import JobApplicationForm
+
 
 def home(request):
     speaker = Speaker.objects.all()
@@ -42,4 +44,28 @@ def view_comment(request):
     return render(request,'comments.html',context)
 
 
+# ----------career section-----------
+def careers_home(request):
+    return render(request, 'careers_home.html')
+
+def careers_list(request):
+    categories = Category.objects.prefetch_related('jobs').all()
+    return render(request, 'careers_list.html', {'categories': categories})
+
+def job_detail(request, job_id):
+    job = get_object_or_404(Job, id=job_id)
+    form = JobApplicationForm()
+    message = None  # Initialize message as None
+
+    if request.method == "POST":
+        form = JobApplicationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            request.session['message'] = "Your application has been submitted successfully!"
+            return redirect(request.path)  # Reload the same page to clear the form
+
+    # Get the message from the session and then clear it
+    message = request.session.pop('message', None)
+    
+    return render(request, 'job_detail.html', {'job': job, 'form': form, 'message': message})
 
