@@ -1,6 +1,15 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, HttpResponse,get_object_or_404
 from .models import *
 from django.db.models import DateField
+from django.contrib.auth.decorators import login_required
+
+def home(request):
+    speaker = Speaker.objects.all()
+    return render(request, 'speakers.html', context={'speaker':speaker})
+
+def speaker_details(request,pk):
+    speaker_details = get_object_or_404(Speaker, pk=pk)
+    return render(request, 'speakers.html' , context={'speaker_detail':speaker_details})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -13,27 +22,24 @@ def schedule_view(request):
     
     return render(request, 'schedule.html', {'grouped_schedules': grouped_schedules})
 
-# --------------------Comment views---------------
+@login_required
 def add_comment(request):
     if request.method == 'POST':
-        f=CmtForm(request.POST)
-        f.save()
-        return redirect('/add_comment')
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user  # Assign logged-in user
+            comment.save()
+            return redirect('/display_cmt')  # Redirect to home instead of 'add_comment'
     else:
-        f=CmtForm
-        context={'form':f}
-        return render(request,'add_comment.html',context)
+        form = CommentForm()
+
+    return render(request, 'comments.html', {'add_cmt': True, 'form': form})
     
 def display_cmt(request):
     cmt=Comment.objects.all()
-    context={'comment':cmt}
-    return render(request,'display_cmt.html',context)
+    context={'comment':cmt, 'show_cmt': True}
+    return render(request,'comments.html',context)
 
-def speaker(request):
-    sk=Speakers.objects.all()
-    return render(request,'index.html',{'sk':sk})
 
-def result(request,id):
-    a=Speakers.objects.get(pk=id)
-    b=Result.objects.filter(speaker_id=a)
-    return render(request,'result.html',{'b':b})
+
