@@ -23,7 +23,7 @@ class Speaker(models.Model):
     speaker_Twitter_account = models.URLField(null=True, blank=True)
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE , default=1)
     comment=models.TextField()
     created_at = models.DateTimeField(auto_now_add=True, null=True)
 

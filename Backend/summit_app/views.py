@@ -30,7 +30,7 @@ def add_comment(request):
             comment = form.save(commit=False)
             comment.user = request.user  # Assign logged-in user
             comment.save()
-            return redirect('home')  # Redirect to home instead of 'add_comment'
+            return redirect('/display_cmt')  # Redirect to home instead of 'add_comment'
     else:
         form = CommentForm()
 
@@ -38,8 +38,8 @@ def add_comment(request):
     
 def display_cmt(request):
     cmt=Comment.objects.all()
-    context={'comment':cmt}
-    return render(request,'comments.html',context={'show_cmt': 'show_cmt'})
+    context={'comment':cmt, 'show_cmt': True}
+    return render(request,'comments.html',context)
 
 
 
