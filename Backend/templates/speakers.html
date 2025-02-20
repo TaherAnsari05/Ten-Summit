@@ -23,8 +23,18 @@
         {% endfor %}
     </div>
 </section>
+{% elif speaker_details %}
+<div class="container">
+    <h1 class="mt-3 text-center">{{ speaker_details.speaker_name }}</h1>
+    <img src="{{ speaker_details.speaker_image.url }}" alt="Speaker Image" style="max-width: 30%; height: auto;">
+    <p class="card-text mb-0"><strong>Position: </strong>{{ speaker_details.speaker_position }}</p>
+    <div class="d-flex">
+        <p><strong>Socials: </strong><a href="{{ speaker_details.speaker_Linkedin_account }}" class="mx-2">LinkedIn</a></p>
+        <p><a href="{{ speaker_details.speaker_Twitter_account }}">Twitter</a></p>
+    </div>
+    <p class="card-text mb-0"><strong>Description: </strong>{{ speaker_details.speaker_description }}</p>
+</div>
 {% else %}
-    <h1>Hey!</h1>
     <p>Nothing to Show</p>
 {% endif %}
 {% endblock content %}

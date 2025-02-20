@@ -11,7 +11,7 @@
         <br>
         <button type="submit" class="btn btn-outline-primary">Submit</button>
         <button type="reset" class="btn btn-outline-primary">Reset</button>
-        <a href="{% url 'display_cmt' %}" class="btn btn-primary mx-2">Show Comments</a>
+        <a href="{% url 'view_comment' %}" class="btn btn-primary mx-2">Show Comments</a>
     </form>
 </div>
 
@@ -21,18 +21,19 @@
     <table class="table table-hover">
         <tr>
             <th>ID</th>
+            <th>User</th>
             <th>Comment</th>
         </tr>
         {% for i in comment %}
         <tr>
             <td>{{ i.id }}</td>
+            <td>{{ i.user }}</td>
             <td>{{ i.comment }}</td>
         </tr>
         {% endfor %}
     </table>
     <a href="{% url 'add_comment' %}" class="btn btn-primary mt-2">Add Comment</a>
 </div>
-
 {% else %}
     <p>Nothing to Show</p>
 {% endif %}

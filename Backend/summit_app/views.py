@@ -9,7 +9,7 @@ def home(request):
 
 def speaker_details(request,pk):
     speaker_details = get_object_or_404(Speaker, pk=pk)
-    return render(request, 'speakers.html' , context={'speaker_detail':speaker_details})
+    return render(request, 'speakers.html' , context={'speaker_details':speaker_details})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -36,7 +36,7 @@ def add_comment(request):
 
     return render(request, 'comments.html', {'add_cmt': True, 'form': form})
     
-def display_cmt(request):
+def view_comment(request):
     cmt=Comment.objects.all()
     context={'comment':cmt, 'show_cmt': True}
     return render(request,'comments.html',context)
