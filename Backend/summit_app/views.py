@@ -7,11 +7,11 @@ from django.contrib import messages
 
 def home(request):
     speaker = Speaker.objects.all()
-    return render(request, 'speakers.html', context={'speaker':speaker})
+    return render(request, 'speakers.html', {'speaker':speaker})
 
 def speaker_details(request,pk):
     speaker_details = get_object_or_404(Speaker, pk=pk)
-    return render(request, 'speakers.html' , context={'speaker_details':speaker_details})
+    return render(request, 'speakers.html' , {'speaker_details':speaker_details})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -33,7 +33,7 @@ def add_comment(request):
             comment.user = request.user
             comment.save()
             messages.success(request, 'Your comment has been added successfully!')
-            return redirect('/display_cmt')
+            return redirect('/view_comment')
         else:
             messages.error(request, 'Please correct the errors and try again.')
     else:

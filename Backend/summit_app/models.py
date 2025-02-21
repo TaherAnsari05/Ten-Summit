@@ -15,7 +15,6 @@ class Schedule(models.Model):
         ordering = ['day', 'start_time']  # Sort by date and then by start time
 
 class Speaker(models.Model):
-    logo = models.CharField(max_length=500, null=True)
     speaker_image = models.ImageField(upload_to='speakers/')
     speaker_name = models.CharField(max_length=100)
     speaker_position = models.CharField(max_length=100)
@@ -63,10 +62,8 @@ class JobApplication(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=15)
     resume = models.FileField(upload_to='resumes/')
-    linkedin_url = models.CharField(max_length=50)
     cover_letter = models.FileField(upload_to='cover_letters/', blank=True, null=True)
-    portfolio = models.FileField(upload_to='portfolios/', blank=True, null=True)
-    personal_note = models.TextField(blank=True, null=True)
+    linkedin_url = models.CharField(max_length=50)
     submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
