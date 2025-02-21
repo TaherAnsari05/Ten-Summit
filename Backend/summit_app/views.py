@@ -3,7 +3,7 @@ from .models import *
 from django.db.models import DateField
 from django.contrib.auth.decorators import login_required
 from .forms import JobApplicationForm
-
+from django.contrib import messages
 
 def home(request):
     speaker = Speaker.objects.all()
@@ -30,42 +30,37 @@ def add_comment(request):
         form = CommentForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            comment.user = request.user  # Assign logged-in user
+            comment.user = request.user
             comment.save()
-            return redirect('/display_cmt')  # Redirect to home instead of 'add_comment'
+            messages.success(request, 'Your comment has been added successfully!')
+            return redirect('/display_cmt')
+        else:
+            messages.error(request, 'Please correct the errors and try again.')
     else:
         form = CommentForm()
-
     return render(request, 'comments.html', {'add_cmt': True, 'form': form})
     
 def view_comment(request):
-    cmt=Comment.objects.all()
-    context={'comment':cmt, 'show_cmt': True}
-    return render(request,'comments.html',context)
+    cmt = Comment.objects.all()
+    return render(request,'comments.html', {'comment':cmt, 'show_cmt': True})
 
-
-# ----------career section-----------
 def careers_home(request):
-    return render(request, 'careers_home.html')
+    return render(request, 'careers.html', {'home': True})
 
 def careers_list(request):
     categories = Category.objects.prefetch_related('jobs').all()
-    return render(request, 'careers_list.html', {'categories': categories})
+    return render(request, 'careers.html', {'categories': categories, 'careers': True})
 
 def job_detail(request, job_id):
     job = get_object_or_404(Job, id=job_id)
     form = JobApplicationForm()
-    message = None  # Initialize message as None
+    message = None
 
     if request.method == "POST":
         form = JobApplicationForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            request.session['message'] = "Your application has been submitted successfully!"
-            return redirect(request.path)  # Reload the same page to clear the form
-
-    # Get the message from the session and then clear it
+            messages.success(request, 'Your application has been submitted successfully!')
+            return redirect(request.path)
     message = request.session.pop('message', None)
-    
-    return render(request, 'job_detail.html', {'job': job, 'form': form, 'message': message})
-
+    return render(request, 'jobs.html', {'job': job, 'form': form, 'message': message})

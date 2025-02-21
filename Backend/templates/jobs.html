@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ job.role }} - Job Details</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %} {{ job.role }} - Job Details {% endblock title %}
 
+{% block content %}
     <div class="container mt-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
@@ -18,33 +12,17 @@
                 <p><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
                 <p><strong>Requirements</strong> {{ job.requirements }}</p>
                 <p><strong>Nice To Have:</strong> {{ job.nice_to_have }}</p>
-    
                 {% if job.external_link %}
                     <p><a href="{{ job.external_link }}" target="_blank" class="btn btn-outline-success">Apply Now</a></p>
                 {% endif %}
             </div>
         </div>
-    
         <h2 class="mt-4">Apply for This Position</h2>
-    
-        {% if message %}
-            <div class="alert alert-success">
-                {{ message }}
-            </div>
-        {% endif %}
-    
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit" class="btn btn-primary">Submit Application</button>
         </form>
-    
         <a href="{% url 'careers_list' %}" class="btn btn-secondary mt-3">Back to Careers</a>
     </div>
-    
-
-
-    
-
-</body>
-</html>
+{% endblock content %}

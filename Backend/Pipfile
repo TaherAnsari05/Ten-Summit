@@ -9,6 +9,7 @@ pillow = "*"
 django-allauth = "*"
 python-dotenv = "*"
 PyJWT = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

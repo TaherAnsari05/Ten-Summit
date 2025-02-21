@@ -1,6 +1,7 @@
 from django.db import models
 from django import forms
 from django.contrib.auth.models import User
+
 class Schedule(models.Model):
     day = models.DateField()
     start_time = models.TimeField()
@@ -31,12 +32,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment']
-        widgets = {
-            'comment':forms.Textarea(attrs={'rows':4, 'placeholder':'Write your comment here'})
-}
-        
-        
-#---------------careers section--------------
+        widgets = {'comment':forms.Textarea(attrs={'rows':4, 'placeholder':'Write your comment here'})}
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
