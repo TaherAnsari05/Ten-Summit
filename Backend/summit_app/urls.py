@@ -5,10 +5,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    # API Call URLS
+    path('api/schedule/', ScheduleView.as_view()),
+    path('api/speakers/', SpeakerView.as_view()),
+    path('api/speakers/<int:pk>/', SpeakerView.as_view()),
+
+    # Web Page URLS
     path('', home),
-    path('schedule/', ScheduleView.as_view()),
-    path('speakers/', SpeakerView.as_view()),
-    path('speakers/<int:pk>/', SpeakerView.as_view()),
+    path('schedule/', schedule_view),
+    path('speaker_details/<int:pk>/', speaker_details, name='speaker_details'),
     path('add_comment/', add_comment, name='add_comment'),
     path('view_comment/',view_comment , name='view_comment'),
     path('careers/', careers_home, name='careers_home'),
