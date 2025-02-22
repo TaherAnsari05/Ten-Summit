@@ -22,6 +22,9 @@ class Speaker(models.Model):
     speaker_Linkedin_account = models.URLField(null=True, blank=True)
     speaker_Twitter_account = models.URLField(null=True, blank=True)
 
+    def __str__(self):
+        return self.speaker_name
+    
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE , default=1)
     comment=models.TextField()
