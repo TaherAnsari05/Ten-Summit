@@ -13,4 +13,5 @@ urlpatterns = [
     path('careers/', careers_home, name='careers_home'),
     path('list/', careers_list, name='careers_list'),
     path('<int:job_id>/', job_detail, name='job_detail'),
+    path('agenda/', agenda_view, name='agenda'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

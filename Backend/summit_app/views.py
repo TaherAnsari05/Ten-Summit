@@ -63,3 +63,7 @@ def job_detail(request, job_id):
             return redirect(request.path)
     message = request.session.pop('message', None)
     return render(request, 'jobs.html', {'job': job, 'form': form, 'message': message})
+
+def agenda_view(request):
+    agenda_items = Agenda.objects.all().order_by('day', 'start_time')    
+    return render(request, 'agenda.html', {'agenda_items': agenda_items})

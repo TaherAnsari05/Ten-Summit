@@ -71,3 +71,15 @@ class JobApplication(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
+from django.db import models
+
+class Agenda(models.Model):
+    day = models.DateField()
+    start_time = models.TimeField()
+    title = models.CharField(max_length=500)
+    description = models.TextField(max_length=1000)
+    host = models.CharField(max_length=200)
+    designation = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
