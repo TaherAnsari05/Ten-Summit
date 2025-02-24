@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView,RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
 class ScheduleView(APIView):
     def get(self,request):
@@ -30,3 +31,9 @@ class SpeakerView(APIView):
             speakers = Speaker.objects.all()
             serializer = SpeakerSerializer(speakers, many=True)
             return Response(serializer.data)
+        
+class CommentView(APIView):
+    def get(self,request):
+        comment = Comment.objects.all()
+        serializer = CommentSerializer(comment, many=True)
+        return Response(serializer.data)
