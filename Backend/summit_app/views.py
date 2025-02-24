@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import JobApplicationForm
 from django.contrib import messages
 from itertools import groupby
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.contrib import messages
+from .forms import ContactForm
 
 def home(request):
     speaker = Speaker.objects.all()
@@ -70,3 +75,38 @@ def agenda_view(request):
     grouped_agenda = {day: list(items) for day, items in groupby(agenda_items, lambda x: x.day)}
 
     return render(request, 'agenda.html', {'grouped_agenda': grouped_agenda})
+
+def contact_view(request):
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            contact = form.save()
+
+            # Get user's email and name
+            user_email = contact.email
+            user_name = contact.first_name
+
+            # Render the HTML email template
+            html_content = render_to_string('summitapp/email_template.html', {'name': user_name})
+            text_content = strip_tags(html_content)  # Convert HTML to plain text
+
+            # Send email
+            email = EmailMultiAlternatives(
+                subject="Thank You for Contacting Us!",
+                body=text_content,  # Plain text version
+                from_email="your_email@gmail.com",  # Replace with your email
+                to=[user_email]
+            )
+            email.attach_alternative(html_content, "text/html")
+            email.send()
+
+            # Show success message on the website
+            messages.success(request, "Your message has been received successfully!")
+
+            return redirect('contact')  # Redirect back to the contact page
+    else:
+        form = ContactForm()
+    return render(request, 'summitapp/contact.html', {'form': form})
+
+def success_view(request):
+    return render(request, 'summitapp/success.html')
