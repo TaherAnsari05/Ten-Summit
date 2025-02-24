@@ -1,0 +1,140 @@
+
+
+/* Header Styles */
+.header-Terms-container {
+  width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 0;
+  
+}
+
+.header-Terms {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.header-Terms-container p {
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Main Content Styles */
+.terms-container {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.terms-content {
+  margin-top: 20px;
+}
+
+.terms-content h3 {
+  font-size: 1.8rem;
+  margin-top: 20px;
+  color: #2c3e50;
+}
+
+.terms-content p {
+  font-size: 1.2rem;
+  line-height: 1.7;
+  margin-bottom: 15px;
+}
+
+.terms-content a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+.terms-content a:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 1200px) {
+  .header-Terms-container {
+    width: 100%;  /* Make the container full-width for smaller screens */
+    padding: 15px 0;  /* Adjust padding for smaller screens */
+  }
+
+  .header-Terms {
+    font-size: 2rem; /* Reduce font size of the header */
+  }
+
+  .header-Terms-container p {
+    font-size: 1rem; /* Slightly reduce the paragraph font size */
+  }
+
+  .terms-container {
+    width: 100%;  /* Make the container full-width for smaller screens */
+    padding: 15px;  /* Reduce padding to save space */
+  }
+
+  .terms-content h3 {
+    font-size: 1.6rem; /* Reduce font size of h3 for better fit */
+  }
+
+  .terms-content p {
+    font-size: 1.1rem; /* Slightly reduce paragraph font size */
+  }  
+}
+
+/* Responsive Styles for screens <= 884px */
+@media (max-width: 884px) {
+  .header-Terms-container {
+    width: 100%;  /* Full width for smaller screens */
+    padding: 15px 0;  /* Reduced padding for smaller screens */
+  }
+
+  .header-Terms {
+    font-size: 2rem;  /* Reduce header font size */
+  }
+
+  .header-Terms-container p {
+    font-size: 1rem;  /* Adjust paragraph font size */
+  }
+
+  .terms-container {
+    width: 100%;  /* Full width for smaller screens */
+    padding: 2px;  /* Adjust padding */
+  }
+
+  .terms-content h3 {
+    font-size: 1.6rem;  /* Adjust h3 size */
+  }
+
+  .terms-content p {
+    font-size: 1.4rem;  /* Slightly reduce font size for paragraphs */
+  }
+}
+
+/* Responsive Styles for screens <= 320px */
+@media (max-width: 320px) {
+  .header-Terms-container {
+    width: 100%;  /* Full width for 320px screens */
+    padding: 10px 0;  /* Reduced padding for small mobile screens */
+  }
+
+  .header-Terms {
+    font-size: 1.8rem;  /* Further reduce header font size */
+  }
+
+  .header-Terms-container p {
+    font-size: 0.9rem;  /* Adjust paragraph font size for smaller screens */
+  }
+
+  .terms-container {
+    width: 100%;  /* Full width for smaller screens */
+    padding: 5px;  /* Adjust padding to ensure layout fits */
+  }
+
+  .terms-content h3 {
+    font-size: 1.4rem;  /* Reduce h3 font size for compact screens */
+  }
+
+  .terms-content p {
+    font-size: 1.2rem;  /* Reduce paragraph font size further */
+  }
+}
