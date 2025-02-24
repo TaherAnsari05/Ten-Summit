@@ -37,3 +37,9 @@ class CommentView(APIView):
         comment = Comment.objects.all()
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
+
+class AgendaView(APIView):
+    def get(self,request):
+        agenda = Agenda.objects.all()
+        serializers = AgendaSerializer(agenda, many=True)
+        return Response(serializers.data)

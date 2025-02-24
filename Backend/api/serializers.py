@@ -1,5 +1,6 @@
 from summit_app.models import *
 from rest_framework import serializers
+from datetime import date
 
 class scheduleSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,3 +26,15 @@ class CommentSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             validated_data['user']= request.user
             return super().create(validated_data)
+        
+
+
+class AgendaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Agenda
+        fields = '__all__'
+    
+    def validate_day(self,value):
+        if value< date.today():
+            raise serializers.ValidationError('The day cannot be in past ')
+        return value
