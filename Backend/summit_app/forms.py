@@ -1,5 +1,11 @@
 from django import forms
 from .models import JobApplication
+from .models import Contact
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
 
 class JobApplicationForm(forms.ModelForm):
     class Meta:
