@@ -1,23 +1,20 @@
-from django.shortcuts import render,redirect, HttpResponse,get_object_or_404
-from .models import *
-from django.db.models import DateField
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import JobApplicationForm
-from django.contrib import messages
-from itertools import groupby
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.contrib import messages
-from .forms import ContactForm
+from django.conf import settings
+from .models import *
+from .forms import *
 
 def home(request):
     speaker = Speaker.objects.all()
-    return render(request, 'speakers.html', {'speaker':speaker})
+    return render(request, 'speakers.html', {'speaker': speaker})
 
-def speaker_details(request,pk):
+def speaker_details(request, pk):
     speaker_details = get_object_or_404(Speaker, pk=pk)
-    return render(request, 'speakers.html' , {'speaker_details':speaker_details})
+    return render(request, 'speakers.html', {'speaker_details': speaker_details})
 
 def schedule_view(request):
     schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -44,10 +41,10 @@ def add_comment(request):
     else:
         form = CommentForm()
     return render(request, 'comments.html', {'add_cmt': True, 'form': form})
-    
+
 def view_comment(request):
     cmt = Comment.objects.all()
-    return render(request,'comments.html', {'comment':cmt, 'show_cmt': True})
+    return render(request, 'comments.html', {'comment': cmt, 'show_cmt': True})
 
 def careers_home(request):
     return render(request, 'careers.html', {'home': True})
@@ -73,40 +70,30 @@ def job_detail(request, job_id):
 def agenda_view(request):
     agenda_items = Agenda.objects.all().order_by('day', 'start_time')
     grouped_agenda = {day: list(items) for day, items in groupby(agenda_items, lambda x: x.day)}
-
     return render(request, 'agenda.html', {'grouped_agenda': grouped_agenda})
+
+def send_contact_email(user_name, user_email):
+    html_content = render_to_string('contact.html', {'name': user_name, 'mail': True})
+    text_content = strip_tags(html_content)  # Convert HTML to plain text
+
+    email = EmailMultiAlternatives(
+        subject="Thank You for Contacting Us!",
+        body=text_content,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[user_email])
+    email.attach_alternative(html_content, "text/html")
+    email.send()
 
 def contact_view(request):
     if request.method == "POST":
         form = ContactForm(request.POST)
         if form.is_valid():
             contact = form.save()
-
-            # Get user's email and name
             user_email = contact.email
             user_name = contact.first_name
-
-            # Render the HTML email template
-            html_content = render_to_string('summitapp/email_template.html', {'name': user_name})
-            text_content = strip_tags(html_content)  # Convert HTML to plain text
-
-            # Send email
-            email = EmailMultiAlternatives(
-                subject="Thank You for Contacting Us!",
-                body=text_content,  # Plain text version
-                from_email="your_email@gmail.com",  # Replace with your email
-                to=[user_email]
-            )
-            email.attach_alternative(html_content, "text/html")
-            email.send()
-
-            # Show success message on the website
+            send_contact_email(user_name, user_email)
             messages.success(request, "Your message has been received successfully!")
-
-            return redirect('contact')  # Redirect back to the contact page
+            return redirect('contact')
     else:
         form = ContactForm()
-    return render(request, 'summitapp/contact.html', {'form': form})
-
-def success_view(request):
-    return render(request, 'summitapp/success.html')
+    return render(request, 'contact.html', {'form': form, 'home': True})

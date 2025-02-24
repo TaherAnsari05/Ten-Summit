@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %} Contact {% endblock title %}
+
+{% block content %}
+{% if home %}
+<div class="container">
+    <h1 class="mt-3 text-center">Contact Us</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+    </form>
+</div>
+
+{% elif mail %}
+<div class="container">
+    <img src="https://your-logo-url.com/logo.png" alt="Ten Summit Logo" class="logo">
+    <h2>Thank You for Contacting Us!</h2>
+    <p>Dear <strong>{{ name }}</strong>,</p>
+    <p>We have received your message and will get back to you soon.</p>
+    <p>Meanwhile, feel free to explore our website for more information.</p>
+    <a href="https://your-website.com" class="btn btn-outline-dark">Visit Our Website</a>
+    <div class="footer">
+        <p>Best Regards,</p>
+        <p><strong>Ten Summit Team</strong></p>
+        <p>&copy; 2025 Ten Summit. All Rights Reserved.</p>
+    </div>
+</div>
+
+{% else %}
+    <p>Nothing to Show</p>
+{% endif %}
+{% endblock content %}
