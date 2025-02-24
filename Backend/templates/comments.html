@@ -9,9 +9,9 @@
         {% csrf_token %}
         {{ form.as_p }}
         <br>
-        <button type="submit" class="btn btn-outline-primary">Submit</button>
-        <button type="reset" class="btn btn-outline-primary">Reset</button>
-        <a href="{% url 'view_comment' %}" class="btn btn-primary mx-2">Show Comments</a>
+        <button type="submit" class="btn btn-outline-dark">Submit</button>
+        <button type="reset" class="btn btn-outline-dark">Reset</button>
+        <a href="{% url 'view_comment' %}" class="btn btn-dark mx-2">Show Comments</a>
     </form>
 </div>
 
@@ -32,7 +32,7 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="{% url 'add_comment' %}" class="btn btn-primary mt-2">Add Comment</a>
+    <a href="{% url 'add_comment' %}" class="btn btn-outline-dark mt-2">Add Comment</a>
 </div>
 {% else %}
     <p>Nothing to Show</p>

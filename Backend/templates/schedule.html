@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{% endblock title %}
+{% block title %} Schedule {% endblock title %}
 
 {% block content %}
 <div class="container">
@@ -10,18 +10,14 @@
             <h2>Day {{ forloop.counter }}: {{ day|date:"l, F j" }}</h2>
         </div>
         <div class="card-body">
-        {% if schedules %}
             {% for schedule in schedules %}
             <div class="mb-3">
                 <h5>{{ schedule.start_time|time:"H:i" }} - {{ schedule.end_time|time:"H:i" }}</h5>
                 <p>{{ schedule.plan_detail }}</p>
             </div>
             {% endfor %}
-        {% else %}
-            <p>No plans for this day.</p>
-        {% endif %}
         </div>
     </div>
-{% endfor %}
+    {% endfor %}
 </div>
 {% endblock content %}

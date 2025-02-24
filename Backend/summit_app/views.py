@@ -4,6 +4,7 @@ from django.db.models import DateField
 from django.contrib.auth.decorators import login_required
 from .forms import JobApplicationForm
 from django.contrib import messages
+from itertools import groupby
 
 def home(request):
     speaker = Speaker.objects.all()
@@ -65,5 +66,7 @@ def job_detail(request, job_id):
     return render(request, 'jobs.html', {'job': job, 'form': form, 'message': message})
 
 def agenda_view(request):
-    agenda_items = Agenda.objects.all().order_by('day', 'start_time')    
-    return render(request, 'agenda.html', {'agenda_items': agenda_items})
+    agenda_items = Agenda.objects.all().order_by('day', 'start_time')
+    grouped_agenda = {day: list(items) for day, items in groupby(agenda_items, lambda x: x.day)}
+
+    return render(request, 'agenda.html', {'grouped_agenda': grouped_agenda})
