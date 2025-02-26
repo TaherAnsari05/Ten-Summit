@@ -1,6 +1,6 @@
 import './App.css'
 import React from "react";
-import TrustCenter from "./components/TrustCenter";
+import TrustCenter from "./pages/TrustCenter";
 
 function App() {
   return (
