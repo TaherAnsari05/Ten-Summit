@@ -1,0 +1,195 @@
+/* PrivacyPolicy.css */
+.privacy-policy-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    /* font-family: Arial, sans-serif; */
+    line-height: 1.5;
+  }
+  
+  .privacy-policy-container .privacy-policy-heading {
+    font-size: 25px;
+    text-decoration: underline;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: #333;
+  }
+
+  .privacy-policy-container a {
+    color: #3498db;
+    text-decoration: none;
+    
+  }
+  
+  .privacy-policy-container a:hover {
+    text-decoration: underline;
+    
+  }
+  
+  .table1 {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders don't double up */
+}
+
+.table1 th, .table1 td{
+    border: 2px solid #ddd; /* Adds border to table headers and data cells */
+    padding: 2px;
+
+}
+
+.table1 td {
+  vertical-align: top; /* Ensure content starts from the top */
+  padding: 8px;
+}
+
+
+.prospects-header {
+  text-align: center; /* Centers the text horizontally */
+  vertical-align: middle; /* Centers the text vertically */
+}
+
+/* Responsive Styles for 1200px screen size */
+@media (max-width: 1200px) {
+  .privacy-policy-container {
+      padding: 15px; /* Adjust padding to 5px for the entire page */
+  }
+
+  .privacy-policy-container .privacy-policy-heading {
+      font-size: 22px; /* Slightly smaller heading */
+  }
+
+  p {
+      font-size: 1rem; /* Smaller text for paragraphs */
+  }
+
+  .table1 th, .table1 td {
+      padding: 5px; /* Reduced padding for smaller screens */
+  }
+
+  .table1 td {
+      font-size: 1rem; /* Slightly smaller font size for table data */
+  }
+
+  .privacy-policy-container a {
+      font-size: 1rem; /* Slightly smaller links */
+  }
+}
+
+
+/* Responsive Styles for 884px screen size */
+@media (max-width: 884px) {
+  .privacy-policy-container {
+      padding: 15px; /* Further reduce padding for smaller screens */
+      width: 95%;  /* Ensure container takes up the full width */
+      max-width: 100%; /* Make sure the container doesn't exceed the screen width */
+  }
+
+  .privacy-policy-container .privacy-policy-heading {
+      font-size: 22px; /* Even smaller heading */
+  }
+
+  p {
+      font-size: 1.2rem; /* Even smaller text for paragraphs */
+  }
+
+  .table1 {
+      width: 100%; /* Make the table take up full width */
+      table-layout: auto; /* Ensure the table adapts to the content width */
+  }
+
+  .table1 th, .table1 td {
+      padding: 4px; /* Further reduced padding */
+      text-align: left; /* Ensures table text aligns properly */
+    
+    }
+
+  .table1 td {
+      font-size: 0.9rem; /* Smaller font size for table data */
+  }
+
+
+.prospects-header h3 {
+  text-align: center;
+}
+  .privacy-policy-container a {
+      font-size: 0.95rem; /* Slightly smaller font size for links */
+  }
+}
+
+
+
+/* Responsive Styles for smaller screens down to 480px */
+@media (max-width: 480px) {
+  .privacy-policy-container {
+      padding: 5px; /* Reduce padding for smaller screens */
+  }
+
+  .privacy-policy-container .privacy-policy-heading {
+      font-size: 20px; /* Reduce heading font size */
+  }
+
+  p {
+      font-size: 1rem; /* Slightly smaller text for readability */
+  }
+
+  .table1 {
+      width: 100%; /* Reduce table width for smaller screens */
+      margin: 0 auto; /* Center the table */
+      table-layout: fixed; /* Make sure the table fits */
+  }
+
+  .table1 th, .table1 td {
+      padding: 6px; /* Reduce padding for smaller screens */
+  }
+
+  .table1 td {
+      font-size: 0.9rem; /* Smaller font size for table data */
+  }
+
+  .privacy-policy-container a {
+      font-size: 0.95rem; /* Slightly smaller font size for links */
+      word-break: break-all;
+  }
+}
+
+
+/* Responsive Styles for smaller screens down to 320px */
+@media (max-width: 320px) {
+  .privacy-policy-container {
+      padding: 2px; /* Further reduce padding for very small screens */
+  }
+
+  .privacy-policy-container .privacy-policy-heading {
+      font-size: 4vw; /* Use viewport width to scale font size */
+  }
+
+  p {
+      font-size: 3.5vw; /* Use viewport width for scaling text */
+  }
+
+  .table1 {
+      width: 100%; /* Table width takes up the full screen width */
+      margin: 0 auto; /* Center the table */
+      table-layout: fixed; /* Make sure the table fits */
+  }
+
+  .table1 th, .table1 td {
+    font-size: 3.8vw; /* Use viewport width for scaling text */
+      padding: 4px; /* Even smaller padding for tight screens */
+  }
+
+  .table1 td {
+      font-size: 3vw; /* Scale table data font size */
+  }
+
+  .privacy-policy-container a {
+      font-size: 3.5vw; /* Use viewport width to scale link text */
+      word-wrap: break-word; /* Ensures words break if needed but do not overflow */
+      overflow-wrap: break-word; /* Additional property to ensure long words wrap */
+  }
+}
