@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 
-
 class ScheduleView(APIView):
     def get(self,request):
         schedules = Schedule.objects.all().order_by('day', 'start_time')
@@ -35,13 +34,11 @@ class SpeakerView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-        
 class CommentView(APIView):
     def get(self, request):
         comment = Comment.objects.all()
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)  # ✅ Added status
-
 
 class AgendaView(APIView):
     def get(self,request):
@@ -69,3 +66,20 @@ class JobApplicationView(APIView):
                 serializer.save()
                 return Response(serializer.data,status=201)
             return Response(serializer.errors, status=400)
+
+class JobApplicationView(APIView):
+    parser_classes = (MultiPartParser, FormParser)  # For handling file uploads
+    permission_classes = [IsAuthenticated]  # Ensure the user is authenticated
+
+    def post(self, request):
+        # Check if the user has already submitted an application
+        try:
+            existing_application = JobApplication.objects.get(user=request.user)
+            return Response({'message': 'You have already submitted your application.'}, status=status.HTTP_400_BAD_REQUEST)
+        except JobApplication.DoesNotExist:
+            # If no application exists for the user, proceed with the creation
+            serializer = JobApplicationSerializer(data=request.data, context={'request': request})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
