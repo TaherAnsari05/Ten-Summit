@@ -2,6 +2,7 @@ from summit_app.models import *
 from rest_framework import serializers
 from datetime import date
 
+
 class scheduleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Schedule
@@ -26,7 +27,6 @@ class CommentSerializer(serializers.ModelSerializer):
             request = self.context.get('request')
             validated_data['user']= request.user
             return super().create(validated_data)
-        
 
 
 class AgendaSerializer(serializers.ModelSerializer):
@@ -38,3 +38,21 @@ class AgendaSerializer(serializers.ModelSerializer):
         if value< date.today():
             raise serializers.ValidationError('The day cannot be in past ')
         return value
+
+class categorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id','name']
+
+
+class jobSerializer(serializers.ModelSerializer):
+    category = categorySerializer()
+    class Meta:
+        model = Job
+        fields = ['category','role','location','seniority','job_type', 'link','about_the_position','responsibilities','requirements','nice_to_have']
+
+class JobApplicationSerializer(serializers.ModelSerializer):
+    resume = serializers.FileField
+    class Meta:
+        model = JobApplication
+        fields = '__all__'

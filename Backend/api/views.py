@@ -4,6 +4,9 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
+
 
 class ScheduleView(APIView):
     def get(self,request):
@@ -22,24 +25,47 @@ class ScheduleView(APIView):
         return Response(serialized_data, status=status.HTTP_200_OK)
             
 class SpeakerView(APIView):
-    def get(self,request,pk=None):
-        if pk is not None:
-            speaker = get_object_or_404(Speaker, pk = pk)
+    def get(self, request, pk=None):
+        if pk:
+            speaker = get_object_or_404(Speaker, pk=pk)
             serializer = SpeakerSerializer(speaker)
-            return Response(serializer.data)
         else:
             speakers = Speaker.objects.all()
             serializer = SpeakerSerializer(speakers, many=True)
-            return Response(serializer.data)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
         
 class CommentView(APIView):
-    def get(self,request):
+    def get(self, request):
         comment = Comment.objects.all()
         serializer = CommentSerializer(comment, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data, status=status.HTTP_200_OK)  # ✅ Added status
+
 
 class AgendaView(APIView):
     def get(self,request):
         agenda = Agenda.objects.all()
         serializers = AgendaSerializer(agenda, many=True)
         return Response(serializers.data)
+    
+class JobView(APIView):
+    def get(self,request):
+        job = Job.objects.all()
+        serializer = jobSerializer(job, many=True)
+        return Response(serializer.data)
+
+class JobApplicationView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    permission_classes = [IsAuthenticated]
+    def post(self,request):
+        try:    
+            existingApplication = JobApplication.objects.get(user = request.user)
+            if existingApplication.exist():
+                return Response({'message':'you have already submitted your application'}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            serializer = JobApplicationSerializer(data = request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data,status=201)
+            return Response(serializer.errors, status=400)
