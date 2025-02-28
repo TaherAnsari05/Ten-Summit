@@ -1,0 +1,47 @@
+*{
+    margin:0;
+    padding: 0;
+}
+.image {
+    background: linear-gradient(to top , #0d3792, #0F1040);
+    margin: 0 auto;
+  
+    /* font-family: Arial, sans-serif; */
+    line-height: 1.5;
+  }
+  .image h1{
+     color: rgb(244, 245, 245);
+     padding: 10px;
+     font-size: 64px;
+     font-weight: 300;
+  }
+  img {
+     height: 300px;
+  }
+  
+ .tab{
+  border: 2px solid #007bff;
+  margin: 20px 400px;
+  border-radius: 30px;
+  padding: 10px;
+  background: #c2dcf8;
+  
+ }
+ .tab button {
+  padding: 10px 50px;
+ 
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight:normal ;
+  color: #555;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: 0.3s;
+}
+.tab-button.activetab {
+   background: #f3f4f4;
+  color: #007bff;
+  border-radius: 30px;
+  border: 2px solid #007bff;
+}
