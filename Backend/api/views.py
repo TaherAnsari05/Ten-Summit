@@ -1,11 +1,17 @@
 from .serializers import *
-from rest_framework.generics import ListAPIView,RetrieveAPIView
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from allauth.socialaccount.models import SocialAccount
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+from django.core.mail import EmailMultiAlternatives
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
 
 class ScheduleView(APIView):
     def get(self,request):
@@ -33,6 +39,7 @@ class SpeakerView(APIView):
             serializer = SpeakerSerializer(speakers, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
 
 class CommentView(APIView):
     def get(self, request):
