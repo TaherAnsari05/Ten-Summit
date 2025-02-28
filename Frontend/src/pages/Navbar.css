@@ -1,0 +1,84 @@
+/* Navbar Container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #000;
+    color: white;
+}
+
+/* Brand/Logo */
+.navbar-brand a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+/* Navbar Links */
+.navbar-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.navbar-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.navbar-links a:hover {
+    text-decoration: underline;
+}
+
+.register-button {
+    border-radius: 50px;
+    border: 2px solid #326DE6;
+    transition-behavior: normal;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    transition-delay: 0s;
+    transition-property: all;
+    padding: 10px 20px;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+
+}
+
+.register-button:hover {
+        border: 2px solid #326DE6; /* Example border color */
+    }
+
+/* Menu Icon (Mobile) */
+.menu-icon {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .menu-icon {
+        display: block;
+    }
+
+    .navbar-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: #000;
+        text-align: center;
+        padding: 1rem 0;
+    }
+
+    .navbar-links.open {
+        display: flex;
+    }
+}
